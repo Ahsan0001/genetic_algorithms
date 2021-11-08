@@ -1,15 +1,15 @@
-import unittest
-import random
-import genetic
 import datetime
+import unittest
+
+import genetic
 
 
 def get_fitness(genes, target):
     return sum(1 for expected, actual in zip(target, genes) if expected == actual)
 
 
-def display(genes, target, startTime):
-    timeDiff = datetime.datetime.now() - startTime
+def display(genes, target, start_time):
+    timeDiff = datetime.datetime.now() - start_time
     fitness = get_fitness(genes, target)
     print("{0}\t{1}\t{2}".format(genes, fitness, str(timeDiff)))
 
@@ -28,14 +28,14 @@ class GuessPasswordTests(unittest.TestCase):
     def guess_password(self, target):
         startTime = datetime.datetime.now()
 
-        def fnGetFitness(genes):
+        def fn_get_fitness(genes):
             return get_fitness(genes, target)
 
-        def fnDisplay(genes):
+        def fn_display(genes):
             display(genes, target, startTime)
 
         optimalFitness = len(target)
-        best = genetic.get_best(fnGetFitness, len(target), optimalFitness, self.geneSet, fnDisplay)
+        best = genetic.get_best(fn_get_fitness, len(target), optimalFitness, self.geneSet, fn_display)
         self.assertEqual(best, target)
 
 
